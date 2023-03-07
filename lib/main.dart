@@ -17,6 +17,3 @@ class BMICalculator extends StatelessWidget {
     );
   }
 }
-//Color.fromARGB(1, 10, 14, 34)
-//Color(0x0A0E21),
-//Color.fromRGBO(10, 14, 33, 1.000),

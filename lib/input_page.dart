@@ -3,14 +3,13 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'icon_content.dart';
 import 'reusable_card.dart';
 import 'constants.dart';
+import 'result_page.dart';
 
 enum Gender {
   male,
   female,
   none,
 }
-
-int weight = 60;
 
 class InputPage extends StatefulWidget {
   const InputPage({super.key});
@@ -22,6 +21,8 @@ class InputPage extends StatefulWidget {
 class InputPageState extends State<InputPage> {
   Gender selectedGender = Gender.none;
   int height = 150;
+  int age = 25;
+  int weight = 60;
 
   @override
   Widget build(BuildContext context) {
@@ -171,17 +172,62 @@ class InputPageState extends State<InputPage> {
                       onPress: () {},
                       colour: kActiveCardColour,
                       cardChild: Column(
-                        children: [],
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('AGE', style: kLabelTextStyle),
+                          Text(
+                            age.toString(),
+                            style: kNumberTextStyle,
+                          ),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                RoundIconButton(
+                                  iconType: FontAwesomeIcons.minus,
+                                  onPressed: () {
+                                    setState(() {
+                                      if (age > 10) age--;
+                                    });
+                                  },
+                                ),
+                                SizedBox(
+                                  width: 20.0,
+                                ),
+                                RoundIconButton(
+                                  iconType: FontAwesomeIcons.plus,
+                                  onPressed: () {
+                                    setState(() {
+                                      if (age < 60) age++;
+                                    });
+                                  },
+                                ),
+                              ])
+                        ],
                       ),
                     ),
                   ),
                 ],
               ),
             ),
-            Container(
-              height: kBottomContainerHeight,
-              margin: EdgeInsets.only(top: 10),
-              color: kBottomContainerColour,
+            GestureDetector(
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ResultPage()));
+              },
+              child: Container(
+                child: Center(
+                  child: Text(
+                    'CALCULATE',
+                    style: TextStyle(
+                      fontSize: 25.0,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+                height: kBottomContainerHeight,
+                margin: EdgeInsets.only(top: 10),
+                color: kBottomContainerColour,
+              ),
             ),
           ],
         ));
