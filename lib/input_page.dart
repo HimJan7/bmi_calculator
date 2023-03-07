@@ -10,6 +10,8 @@ enum Gender {
   none,
 }
 
+int weight = 60;
+
 class InputPage extends StatefulWidget {
   const InputPage({super.key});
 
@@ -20,7 +22,7 @@ class InputPage extends StatefulWidget {
 class InputPageState extends State<InputPage> {
   Gender selectedGender = Gender.none;
   int height = 150;
-  int weight = 60;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -140,24 +142,24 @@ class InputPageState extends State<InputPage> {
                           Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                FloatingActionButton(
-                                  onPressed: () {},
-                                  child: Icon(
-                                    Icons.remove,
-                                    color: Colors.white,
-                                  ),
-                                  backgroundColor: Color(0xFF4C4F5E),
+                                RoundIconButton(
+                                  iconType: FontAwesomeIcons.minus,
+                                  onPressed: () {
+                                    setState(() {
+                                      if (weight > 50) weight--;
+                                    });
+                                  },
                                 ),
                                 SizedBox(
-                                  width: 5,
+                                  width: 20.0,
                                 ),
-                                FloatingActionButton(
-                                  onPressed: () {},
-                                  child: Icon(
-                                    Icons.add,
-                                    color: Colors.white,
-                                  ),
-                                  backgroundColor: Color(0xFF4C4F5E),
+                                RoundIconButton(
+                                  iconType: FontAwesomeIcons.plus,
+                                  onPressed: () {
+                                    setState(() {
+                                      if (weight < 120) weight++;
+                                    });
+                                  },
                                 ),
                               ])
                         ],
@@ -183,5 +185,25 @@ class InputPageState extends State<InputPage> {
             ),
           ],
         ));
+  }
+}
+
+class RoundIconButton extends StatelessWidget {
+  RoundIconButton({required this.iconType, required this.onPressed});
+  final IconData iconType;
+  final VoidCallback onPressed;
+  @override
+  Widget build(BuildContext context) {
+    return RawMaterialButton(
+      elevation: 6.0,
+      constraints: BoxConstraints.tightFor(
+        width: 56.0,
+        height: 56.0,
+      ),
+      shape: CircleBorder(),
+      fillColor: Color(0xFF4C4F5E),
+      child: Icon(iconType),
+      onPressed: onPressed,
+    );
   }
 }
