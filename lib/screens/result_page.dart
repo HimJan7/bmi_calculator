@@ -1,8 +1,18 @@
-import 'package:bmi_calculator/reusable_card.dart';
+import 'package:bmi_calculator/components/reusable_card.dart';
 import 'package:flutter/material.dart';
-import 'constants.dart';
+import '../components/constants.dart';
+import 'package:bmi_calculator/components/bottom_button.dart';
 
 class ResultPage extends StatelessWidget {
+  ResultPage(
+      {required this.bmiResult,
+      required this.resultText,
+      required this.resultInterpret});
+
+  final String bmiResult;
+  final String resultText;
+  final String resultInterpret;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,36 +26,46 @@ class ResultPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Expanded(
-              child: Text(
-            'Your Result',
-            style: kTitleTextStyle,
+              child: Container(
+            padding: EdgeInsets.all(10),
+            alignment: Alignment.bottomLeft,
+            child: Text(
+              'Your Result',
+              style: kTitleTextStyle,
+            ),
           )),
           Expanded(
-              flex: 5,
-              child: ReusableCard(
-                  onPress: () {},
-                  colour: kActiveCardColour,
-                  cardChild: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Center(
-                        child: Text(
-                          'Normal',
-                          style: kResultTextStyle,
-                        ),
+            flex: 5,
+            child: ReusableCard(
+                onPress: () {},
+                colour: kActiveCardColour,
+                cardChild: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Center(
+                      child: Text(
+                        resultText.toUpperCase(),
+                        style: kResultTextStyle,
                       ),
-                      Text(
-                        '18.3',
-                        style: kBmiTextStyle,
-                      ),
-                      Text(
-                        'Your BMI result is quite low, you should eat more!',
-                        style: kBodyTextStyle,
-                        textAlign: TextAlign.center,
-                      )
-                    ],
-                  )))
+                    ),
+                    Text(
+                      bmiResult,
+                      style: kBmiTextStyle,
+                    ),
+                    Text(
+                      resultInterpret,
+                      style: kBodyTextStyle,
+                      textAlign: TextAlign.center,
+                    )
+                  ],
+                )),
+          ),
+          BottomButton(
+              onTapping: () {
+                Navigator.pop(context);
+              },
+              buttonTitle: 'RE-CALCULATE'),
         ],
       ),
     );
